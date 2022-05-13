@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let isInArray= false;
+    let userIndex = -1;
+    let users =[{id:0,name:"Islam",login:"admin",password:"qwerty"}]
+
+    while(true){
+        let choice= prompt("выбери 1 - чтобы зарегистрироваться\n" +
+            "выбери 2 - чтобы войти \n" +
+            "выбери 3 - чтобы увидеть вошедшего пользователя\n" +
+            "выбери 4 - чтобы поменять свой пароль\n" +
+            "выбери 5 - чтобы выйти из аккаунта\n" +
+            "выбери 6 - чтобы выйти из меню")
+        if(choice==1){
+            if (isInArray==false) {
+                let newName = prompt("Enter name:");
+                let newLogin = prompt("Enter login:");
+                let newPassword = prompt("Enter password");
+                let rePassword = prompt("Enter password again");
+
+                let authentication = true;
+                for (let i = 0; i < users.length; i++)
+                    if (newLogin === users[i].login) {
+                        authentication = false;
+                    }
+
+                if (authentication && newPassword===rePassword) {
+                    let NewUser={};
+                    NewUser.id=users.lenght+1;
+                    NewUser.name=newName;
+                    NewUser.login=newLogin;
+                    NewUser.password=newPassword;
+                    users.push(NewUser);
+                    alert("success");
+                }
+                else if (newPassword!==rePassword)
+                    alert("Passwords are not the same");
+                else
+                    alert("User with this login is already exists");
+            } else alert("You've already logged in! Please, log out");
+        }
+        else if (choice==2){
+            if (users.length === 0)
+                alert("there is no one")
+            else {
+                if (isInArray===false) {
+                    let userLogin = prompt("Enter login:");
+                    let userPassword = prompt("Enter password:");
+
+                    let authentication = false;
+                    for (let i = 0; i < users.length; i++)
+                        if (userLogin === users[i].login && userPassword === users[i].password) {
+                            authentication = true;
+                            isInArray=true;
+                            userIndex = i;
+                        }
+                    if (authentication)
+                        alert("Welcome, " + users[userIndex].name)
+                    else alert("Incorrect login or password, try again!")
+                }
+                else alert("You've already signed in!")
+            }
+        }
+        else if(choice==3){
+            if(isInArray==true)
+                alert("Your name: " + users[userIndex].name);
+            else
+                alert("Please, login")
+        }
+        else if(choice==4){
+            if(isInArray==true){
+                let password = prompt("Enter your old password:");
+
+                if (password === users[userIndex].password){
+                    let newPassword = prompt("Enter your new password:");
+                    let rePassword = prompt("Enter your new password again:");
+                    if (newPassword === rePassword){
+                        users[userIndex].password = newPassword;
+                        alert("success");
+                    }
+                    else alert("Passwords are not the same");}
+                else
+                    alert("Incorrect password");
+            }
+            else
+                alert("To change the password, login!")
+        }
+        else if(choice==5){
+            if(isInArray==true){
+                isInArray=false;
+                userIndex=-1;
+                alert("success")
+            }
+            else
+                alert ("You haven't authorized yet")
+        }
+        else if(choice==6)
+            break;
+    }
+</script>
+</body>
+</html>
